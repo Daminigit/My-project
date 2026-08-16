@@ -1,0 +1,39 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data files (generated)
+data/zomato_cleaned.csv
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Logs
+*.log
