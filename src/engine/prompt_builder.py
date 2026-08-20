@@ -22,7 +22,7 @@ def build_system_prompt() -> str:
     )
 
 
-def build_user_context(preferences: UserPreferences) -> str:
+def build_user_context(preferences: UserPreferences, relaxation_note: str = None) -> str:
     """Formats the user's constraints into a prompt string."""
     context = (
         f"I'm looking for {preferences.cuisine} restaurants in {preferences.location} "
@@ -30,6 +30,12 @@ def build_user_context(preferences: UserPreferences) -> str:
     )
     if preferences.preferences:
         context += f"\nAdditional preferences: {preferences.preferences}"
+    if relaxation_note:
+        context += (
+            f"\n\nIMPORTANT NOTE: We couldn't find a perfect match, so we relaxed some filters. "
+            f"{relaxation_note} Please explicitly acknowledge this in your explanation and DO NOT "
+            f"claim that a restaurant perfectly matches their original criteria if it does not."
+        )
     return context
 
 
@@ -47,10 +53,10 @@ def build_restaurant_data(restaurants_df: pd.DataFrame) -> str:
     return data_str
 
 
-def build_messages(preferences: UserPreferences, restaurants_df: pd.DataFrame) -> List[Dict[str, str]]:
+def build_messages(preferences: UserPreferences, restaurants_df: pd.DataFrame, relaxation_note: str = None) -> List[Dict[str, str]]:
     """Assembles the full chat messages array compatible with Groq API."""
     system_prompt = build_system_prompt()
-    user_context = build_user_context(preferences)
+    user_context = build_user_context(preferences, relaxation_note)
     restaurant_data = build_restaurant_data(restaurants_df)
 
     user_message_content = f"{user_context}\n\n{restaurant_data}"

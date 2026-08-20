@@ -183,17 +183,18 @@ def get_available_locations(df: pd.DataFrame) -> List[str]:
 
 def get_available_cuisines(df: pd.DataFrame) -> List[str]:
     """
-    Get sorted list of unique individual cuisines in the dataset.
+    Get list of unique individual cuisines sorted by frequency (most common first).
 
     Splits comma-separated cuisine strings into individual items.
     """
-    all_cuisines = set()
+    cuisine_counts: dict = {}
     for cuisine_str in df["cuisine"].dropna():
         for item in str(cuisine_str).split(","):
             cleaned = item.strip().lower()
             if cleaned:
-                all_cuisines.add(cleaned)
-    return sorted(all_cuisines)
+                cuisine_counts[cleaned] = cuisine_counts.get(cleaned, 0) + 1
+    # Sort by count descending, then alphabetically for ties
+    return [c for c, _ in sorted(cuisine_counts.items(), key=lambda x: (-x[1], x[0]))]
 
 
 def suggest_locations(

@@ -354,56 +354,27 @@ class RecommendationResponse(BaseModel):
 
 ## Phase 6: Frontend / UI
 
-> **Goal**: Build a user-friendly interface for collecting preferences and displaying recommendations.
+> **Goal**: Build a user-friendly, high-quality interface using React/Next.js based on the Google Stitch design, for collecting preferences and displaying recommendations.
 
 ### Tasks
 
 | #   | Task                                                | File(s)               | Status |
 | --- | --------------------------------------------------- | --------------------- | ------ |
-| 6.1 | Set up Streamlit app (or HTML/JS frontend)          | `src/ui/app.py`       | ☐      |
-| 6.2 | Build user input form (location, budget, cuisine, etc.) | `src/ui/app.py`   | ☐      |
-| 6.3 | Add dropdown options populated from API             | `src/ui/app.py`       | ☐      |
-| 6.4 | Display recommendation cards with all fields        | `src/ui/app.py`       | ☐      |
-| 6.5 | Add loading spinner during LLM processing           | `src/ui/app.py`       | ☐      |
-| 6.6 | Style the UI (colors, layout, typography)           | `src/ui/app.py`       | ☐      |
-| 6.7 | Add error state handling in UI                      | `src/ui/app.py`       | ☐      |
+| 6.1 | Initialize Next.js app in a `frontend` directory    | `frontend/*`          | ☐      |
+| 6.2 | Configure TailwindCSS based on `DESIGN.md`          | `tailwind.config.js`  | ☐      |
+| 6.3 | Port HTML/CSS from Google Stitch to React components| `frontend/app/`       | ☐      |
+| 6.4 | Fetch available locations/cuisines from API         | `frontend/app/page.js`| ☐      |
+| 6.5 | Wire up form submission to `POST /api/recommend`    | `frontend/app/page.js`| ☐      |
+| 6.6 | Add skeleton loaders and error states               | `frontend/app/page.js`| ☐      |
+| 6.7 | Integrate recommendation cards with dynamic data    | `frontend/app/page.js`| ☐      |
 
 ### UI Layout
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  🍽️  Zomato AI Restaurant Recommender                   │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  📍 Location:   [ Delhi         ▼ ]                     │
-│  💰 Budget:     [ Medium        ▼ ]                     │
-│  🍕 Cuisine:    [ Italian       ▼ ]                     │
-│  ⭐ Min Rating: [ ====●======== ] 4.0                   │
-│  📝 Other:      [ family-friendly, outdoor      ]       │
-│                                                         │
-│           [ 🔍 Get Recommendations ]                    │
-│                                                         │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│  📊 AI Summary:                                         │
-│  "Based on your preferences, here are the top picks..." │
-│                                                         │
-│  ┌───────────────────────────────────────────┐          │
-│  │ 🥇 #1 — Olive Bar & Kitchen              │          │
-│  │    Cuisine: Italian, Mediterranean        │          │
-│  │    Rating: ⭐ 4.6  |  Cost: ₹1,200       │          │
-│  │    💡 "Perfect for a family outing..."    │          │
-│  └───────────────────────────────────────────┘          │
-│                                                         │
-│  ┌───────────────────────────────────────────┐          │
-│  │ 🥈 #2 — Tonino                           │          │
-│  │    Cuisine: Italian                       │          │
-│  │    Rating: ⭐ 4.4  |  Cost: ₹1,100       │          │
-│  │    💡 "Great value with authentic..."     │          │
-│  └───────────────────────────────────────────┘          │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
-```
+The UI layout is based on the Google Stitch output (`stitch_zomato_ai_restaurant_recommender/code.html`), featuring:
+- A responsive dark theme with Glassmorphism and Zomato Red accents.
+- A left sidebar for preferences (Location, Budget, Cuisine chips, Minimum Rating slider).
+- A main content area for "AI Top Picks" displaying ranked restaurant cards.
+- Each card includes an "AI Explanation Box" with a lightbulb icon.
 
 ### Acceptance Criteria
 

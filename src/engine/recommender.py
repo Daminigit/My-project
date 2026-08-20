@@ -6,6 +6,7 @@ recommendations with explanations.
 """
 
 import json
+from io import StringIO
 from typing import Dict, Any, List
 from functools import lru_cache
 import pandas as pd
@@ -29,15 +30,15 @@ def get_llm_client() -> Groq:
 
 
 @lru_cache(maxsize=100)
-def cached_recommendations(preferences_json: str, restaurants_json: str) -> str:
+def cached_recommendations(preferences_json: str, restaurants_json: str, relaxation_note: str = None) -> str:
     """
     Cached wrapper for calling the LLM. 
     Uses JSON strings for hashability.
     """
     preferences = UserPreferences.model_validate_json(preferences_json)
-    restaurants_df = pd.read_json(restaurants_json, orient="records")
+    restaurants_df = pd.read_json(StringIO(restaurants_json), orient="records")
     
-    messages = build_messages(preferences, restaurants_df)
+    messages = build_messages(preferences, restaurants_df, relaxation_note)
     client = get_llm_client()
 
     try:
@@ -72,7 +73,7 @@ def parse_llm_response(response_str: str) -> RecommendationResponse:
         )
 
 
-def generate_recommendations(preferences: UserPreferences, restaurants_df: pd.DataFrame) -> RecommendationResponse:
+def generate_recommendations(preferences: UserPreferences, restaurants_df: pd.DataFrame, relaxation_note: str = None) -> RecommendationResponse:
     """Main entry point to generate recommendations."""
     if restaurants_df.empty:
         return RecommendationResponse(
@@ -90,5 +91,5 @@ def generate_recommendations(preferences: UserPreferences, restaurants_df: pd.Da
     else:
         df_json = restaurants_df.to_json(orient="records")
 
-    raw_response = cached_recommendations(pref_json, df_json)
+    raw_response = cached_recommendations(pref_json, df_json, relaxation_note)
     return parse_llm_response(raw_response)

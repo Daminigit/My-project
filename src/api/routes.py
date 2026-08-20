@@ -67,7 +67,11 @@ async def get_recommendations(preferences: UserPreferences) -> RecommendationRes
     filter_result = filter_from_preferences(_df, preferences, top_n=data_config.TOP_N_CANDIDATES)
     
     # 2. Generate LLM recommendations from the filtered candidates
-    response = generate_recommendations(preferences, filter_result.restaurants)
+    response = generate_recommendations(
+        preferences, 
+        filter_result.restaurants, 
+        relaxation_note=filter_result.relaxation_note if filter_result.is_relaxed else None
+    )
     
     # Optional: Append the filter relaxation note if any (to inform UI)
     if filter_result.is_relaxed and filter_result.relaxation_note:
