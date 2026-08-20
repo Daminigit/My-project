@@ -34,9 +34,9 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
 
-    # Register API routes (will be implemented in Phase 5)
-    # from src.api.routes import router
-    # application.include_router(router, prefix="/api")
+    # Register API routes
+    from src.api.routes import router
+    application.include_router(router, prefix="/api")
 
     return application
 

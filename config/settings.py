@@ -17,26 +17,20 @@ load_dotenv(BASE_DIR / ".env")
 class LLMConfig:
     """LLM API configuration."""
 
-    PROVIDER: str = os.getenv("LLM_PROVIDER", "openai")
-    MODEL: str = os.getenv("LLM_MODEL", "gpt-3.5-turbo")
+    PROVIDER: str = os.getenv("LLM_PROVIDER", "groq")
+    MODEL: str = os.getenv("LLM_MODEL", "llama3-8b-8192")
     TEMPERATURE: float = float(os.getenv("LLM_TEMPERATURE", "0.7"))
     MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "1024"))
 
     # API Keys
-    OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY", "")
-    GOOGLE_API_KEY: str = os.getenv("GOOGLE_API_KEY", "")
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "")
 
     @classmethod
     def validate(cls) -> None:
         """Validate that the required API key is set for the chosen provider."""
-        if cls.PROVIDER == "openai" and not cls.OPENAI_API_KEY:
+        if cls.PROVIDER == "groq" and not cls.GROQ_API_KEY:
             raise ValueError(
-                "OPENAI_API_KEY is required when LLM_PROVIDER is 'openai'. "
-                "Set it in your .env file."
-            )
-        if cls.PROVIDER == "gemini" and not cls.GOOGLE_API_KEY:
-            raise ValueError(
-                "GOOGLE_API_KEY is required when LLM_PROVIDER is 'gemini'. "
+                "GROQ_API_KEY is required when LLM_PROVIDER is 'groq'. "
                 "Set it in your .env file."
             )
 
