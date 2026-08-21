@@ -28,9 +28,10 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
         const [locRes, cuiRes] = await Promise.all([
-          fetch("http://localhost:8000/api/locations"),
-          fetch("http://localhost:8000/api/cuisines")
+          fetch(`${baseUrl}/api/locations`),
+          fetch(`${baseUrl}/api/cuisines`)
         ]);
         if (locRes.ok) {
           const locData = await locRes.json();
@@ -67,7 +68,8 @@ export default function Home() {
         preferences: additionalContext || undefined
       };
 
-      const res = await fetch("http://localhost:8000/api/recommend", {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      const res = await fetch(`${baseUrl}/api/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
