@@ -22,7 +22,7 @@ env/
 Thumbs.db
 
 # Data files (generated)
-data/zomato_cleaned.csv
+# data/zomato_cleaned.csv (uncommented to allow deployment to Railway)
 
 # Distribution / packaging
 dist/
