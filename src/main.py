@@ -1,6 +1,5 @@
 """
-FastAPI Application Entry Point.
-
+FastAPI Application Entry Point. Backend
 Initializes the FastAPI app, registers middleware,
 and includes API route handlers.
 """
