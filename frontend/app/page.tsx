@@ -28,7 +28,8 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        let baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+        baseUrl = baseUrl.replace(/\/$/, ""); // Strip trailing slash if present
         const [locRes, cuiRes] = await Promise.all([
           fetch(`${baseUrl}/api/locations`),
           fetch(`${baseUrl}/api/cuisines`)
@@ -68,7 +69,8 @@ export default function Home() {
         preferences: additionalContext || undefined
       };
 
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      let baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+      baseUrl = baseUrl.replace(/\/$/, ""); // Strip trailing slash if present
       const res = await fetch(`${baseUrl}/api/recommend`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
