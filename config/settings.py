@@ -18,7 +18,7 @@ class LLMConfig:
     """LLM API configuration."""
 
     PROVIDER: str = os.getenv("LLM_PROVIDER", "groq")
-    MODEL: str = os.getenv("LLM_MODEL", "llama3-8b-8192")
+    MODEL: str = os.getenv("LLM_MODEL", "groq/compound-mini")
     TEMPERATURE: float = float(os.getenv("LLM_TEMPERATURE", "0.7"))
     MAX_TOKENS: int = int(os.getenv("LLM_MAX_TOKENS", "1024"))
 
@@ -51,7 +51,7 @@ class DataConfig:
         "DATASET_NAME", "ManikaSaini/zomato-restaurant-recommendation"
     )
     CACHE_PATH: str = os.getenv("DATA_CACHE_PATH", "data/zomato_cleaned.csv")
-    TOP_N_CANDIDATES: int = int(os.getenv("TOP_N_CANDIDATES", "20"))
+    TOP_N_CANDIDATES: int = int(os.getenv("TOP_N_CANDIDATES", "3"))
     TOP_N_RECOMMENDATIONS: int = int(os.getenv("TOP_N_RECOMMENDATIONS", "5"))
 
     # Budget mapping (cost_for_two in ₹)
